@@ -1,0 +1,18 @@
+{
+  "timeZone": "Asia/Kolkata",
+  "dependencies": {
+    "enabledAdvancedServices": [{
+      "userSymbol": "Calendar",
+      "serviceId": "calendar",
+      "version": "v3"
+    }],
+    "libraries": [{
+      "userSymbol": "DSMBotLibrary",
+      "libraryId": "1MsGd-5PJdl3jacWOd68Ed63-IxxAEEEewORmipsYJpnvtPQbcXwHRDPq",
+      "version": "0",
+      "developmentMode": true
+    }]
+  },
+  "exceptionLogging": "STACKDRIVER",
+  "runtimeVersion": "V8"
+}

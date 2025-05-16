@@ -1,0 +1,22 @@
+# Node modules
+node_modules/
+
+# Mac system files
+.DS_Store
+
+# Google Apps Script clasp config
+.clasp.json
+
+# Temp files
+*.tmp
+*.log
+
+# VSCode settings
+.vscode/
+
+# OS generated files
+Thumbs.db
+
+# Ignore local env files
+.env
+.env.* 

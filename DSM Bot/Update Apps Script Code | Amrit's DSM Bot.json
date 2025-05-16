@@ -1,0 +1,2154 @@
+{
+    "name": "Update Apps Script Code | Amrit's DSM Bot",
+    "flow": [
+        {
+            "id": 1,
+            "module": "gateway:CustomWebHook",
+            "version": 1,
+            "parameters": {
+                "hook": 33558,
+                "maxResults": 1
+            },
+            "mapper": {},
+            "metadata": {
+                "designer": {
+                    "x": 0,
+                    "y": 750
+                },
+                "restore": {
+                    "parameters": {
+                        "hook": {
+                            "data": {
+                                "editable": "true"
+                            },
+                            "label": "Amrit's DSM Bot | Update Apps Script Code Webhook"
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "name": "hook",
+                        "type": "hook:gateway-webhook",
+                        "label": "Webhook",
+                        "required": true
+                    },
+                    {
+                        "name": "maxResults",
+                        "type": "number",
+                        "label": "Maximum number of results"
+                    }
+                ],
+                "interface": [
+                    {
+                        "name": "sourceUpdatedScriptId",
+                        "type": "text"
+                    },
+                    {
+                        "name": "toUpdateScriptId",
+                        "type": "text"
+                    }
+                ]
+            }
+        },
+        {
+            "id": 5,
+            "module": "builtin:BasicRouter",
+            "version": 1,
+            "mapper": null,
+            "metadata": {
+                "designer": {
+                    "x": 300,
+                    "y": 750
+                }
+            },
+            "routes": [
+                {
+                    "flow": [
+                        {
+                            "id": 2,
+                            "module": "util:SetVariables",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "scope": "roundtrip",
+                                "variables": [
+                                    {
+                                        "name": "Testing",
+                                        "value": ""
+                                    },
+                                    {
+                                        "name": "Source Script Id, Updated",
+                                        "value": "{{ifempty(1.sourceUpdatedScriptId; if(1.isTemplateUpdate; \"1bpvUvzOKbBHFkuzMARbzvCYGApNBBSHUaHMA9yfMIrhyc3yDLBkqpMf9\"; ignore))}}"
+                                    },
+                                    {
+                                        "name": "Destination Script Id, Old Version",
+                                        "value": "{{ifempty(1.toUpdateScriptId; if(1.isTemplateUpdate; \"1UYxaicpe0ICA2XUND2JwLTMxYd9GhHBU8OoKDaT-WIESYohzcM0-7Vng\"; ignore))}}"
+                                    },
+                                    {
+                                        "name": "Is Template Update",
+                                        "value": "{{if(1.isTemplateUpdate; true; false)}}"
+                                    },
+                                    {
+                                        "name": "API KEY",
+                                        "value": "YOUR_API_KEY_HERE"
+                                    }
+                                ]
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 600,
+                                    "y": 450
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "scope": {
+                                            "label": "One cycle"
+                                        },
+                                        "variables": {
+                                            "items": [
+                                                null,
+                                                null,
+                                                null,
+                                                null,
+                                                null
+                                            ]
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "name": "variables",
+                                        "spec": [
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Variable name",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "any",
+                                                "label": "Variable value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Variables"
+                                    },
+                                    {
+                                        "name": "scope",
+                                        "type": "select",
+                                        "label": "Variable lifetime",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "roundtrip",
+                                                "execution"
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "Testing",
+                                        "type": "any",
+                                        "label": "Testing"
+                                    },
+                                    {
+                                        "name": "Source Script Id, Updated",
+                                        "type": "any",
+                                        "label": "Source Script Id, Updated"
+                                    },
+                                    {
+                                        "name": "Destination Script Id, Old Version",
+                                        "type": "any",
+                                        "label": "Destination Script Id, Old Version"
+                                    },
+                                    {
+                                        "name": "Is Template Update",
+                                        "type": "any",
+                                        "label": "Is Template Update"
+                                    },
+                                    {
+                                        "name": "API KEY",
+                                        "type": "any",
+                                        "label": "API KEY"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 25,
+                            "module": "builtin:BasicRouter",
+                            "version": 1,
+                            "mapper": null,
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": 450
+                                }
+                            },
+                            "routes": [
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 3,
+                                            "module": "http:ActionSendDataOAuth",
+                                            "version": 3,
+                                            "parameters": {
+                                                "account": 33477,
+                                                "handleErrors": false
+                                            },
+                                            "filter": {
+                                                "name": "Script IDs Available",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{2.`Source Script Id, Updated`}}",
+                                                            "o": "exist"
+                                                        },
+                                                        {
+                                                            "a": "{{2.`Destination Script Id, Old Version`}}",
+                                                            "o": "exist"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "ca": "",
+                                                "qs": [
+                                                    {
+                                                        "name": "key",
+                                                        "value": "{{2.`API KEY`}}"
+                                                    }
+                                                ],
+                                                "url": "https://script.googleapis.com/v1/projects/{{2.`Source Script Id, Updated`}}/content",
+                                                "gzip": true,
+                                                "method": "get",
+                                                "headers": [],
+                                                "timeout": "",
+                                                "useMtls": false,
+                                                "bodyType": "",
+                                                "serializeUrl": false,
+                                                "shareCookies": false,
+                                                "parseResponse": false,
+                                                "followRedirect": true,
+                                                "useQuerystring": false,
+                                                "followAllRedirects": false,
+                                                "rejectUnauthorized": true
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1200,
+                                                    "y": 300,
+                                                    "name": "Get Contents of the Script"
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "qs": {
+                                                            "mode": "chose",
+                                                            "items": [
+                                                                null
+                                                            ]
+                                                        },
+                                                        "method": {
+                                                            "mode": "chose",
+                                                            "label": "GET"
+                                                        },
+                                                        "headers": {
+                                                            "mode": "chose"
+                                                        },
+                                                        "bodyType": {
+                                                            "label": "Empty"
+                                                        }
+                                                    },
+                                                    "parameters": {
+                                                        "account": {
+                                                            "data": {
+                                                                "scoped": "true",
+                                                                "connection": "oauth2"
+                                                            },
+                                                            "label": "Amrit's Google Apps Script OAuth 2.0 connection"
+                                                        }
+                                                    }
+                                                },
+                                                "parameters": [
+                                                    {
+                                                        "name": "account",
+                                                        "type": "account:oauth2",
+                                                        "label": "Connection",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "handleErrors",
+                                                        "type": "boolean",
+                                                        "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+                                                        "required": true
+                                                    }
+                                                ],
+                                                "expect": [
+                                                    {
+                                                        "name": "url",
+                                                        "type": "url",
+                                                        "label": "URL",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "serializeUrl",
+                                                        "type": "boolean",
+                                                        "label": "Serialize URL",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "method",
+                                                        "type": "select",
+                                                        "label": "Method",
+                                                        "required": true,
+                                                        "validate": {
+                                                            "enum": [
+                                                                "get",
+                                                                "head",
+                                                                "post",
+                                                                "put",
+                                                                "patch",
+                                                                "delete",
+                                                                "options"
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "headers",
+                                                        "spec": [
+                                                            {
+                                                                "name": "name",
+                                                                "type": "text",
+                                                                "label": "Name",
+                                                                "required": true
+                                                            },
+                                                            {
+                                                                "name": "value",
+                                                                "type": "text",
+                                                                "label": "Value"
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Headers"
+                                                    },
+                                                    {
+                                                        "name": "qs",
+                                                        "spec": [
+                                                            {
+                                                                "name": "name",
+                                                                "type": "text",
+                                                                "label": "Name",
+                                                                "required": true
+                                                            },
+                                                            {
+                                                                "name": "value",
+                                                                "type": "text",
+                                                                "label": "Value"
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Query String"
+                                                    },
+                                                    {
+                                                        "name": "bodyType",
+                                                        "type": "select",
+                                                        "label": "Body type",
+                                                        "validate": {
+                                                            "enum": [
+                                                                "raw",
+                                                                "x_www_form_urlencoded",
+                                                                "multipart_form_data"
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "parseResponse",
+                                                        "type": "boolean",
+                                                        "label": "Parse response",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "timeout",
+                                                        "type": "uinteger",
+                                                        "label": "Timeout",
+                                                        "validate": {
+                                                            "max": 300,
+                                                            "min": 1
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "shareCookies",
+                                                        "type": "boolean",
+                                                        "label": "Share cookies with other HTTP modules",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "ca",
+                                                        "type": "cert",
+                                                        "label": "Self-signed certificate"
+                                                    },
+                                                    {
+                                                        "name": "rejectUnauthorized",
+                                                        "type": "boolean",
+                                                        "label": "Reject connections that are using unverified (self-signed) certificates",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "followRedirect",
+                                                        "type": "boolean",
+                                                        "label": "Follow redirect",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "useQuerystring",
+                                                        "type": "boolean",
+                                                        "label": "Disable serialization of multiple same query string keys as arrays",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "gzip",
+                                                        "type": "boolean",
+                                                        "label": "Request compressed content",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "useMtls",
+                                                        "type": "boolean",
+                                                        "label": "Use Mutual TLS",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "followAllRedirects",
+                                                        "type": "boolean",
+                                                        "label": "Follow all redirect",
+                                                        "required": true
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 10,
+                                            "module": "builtin:BasicRouter",
+                                            "version": 1,
+                                            "mapper": null,
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1500,
+                                                    "y": 300
+                                                }
+                                            },
+                                            "routes": [
+                                                {
+                                                    "flow": [
+                                                        {
+                                                            "id": 4,
+                                                            "module": "http:ActionSendDataOAuth",
+                                                            "version": 3,
+                                                            "parameters": {
+                                                                "account": 33477,
+                                                                "handleErrors": false
+                                                            },
+                                                            "filter": {
+                                                                "name": "Success",
+                                                                "conditions": [
+                                                                    [
+                                                                        {
+                                                                            "a": "{{3.statusCode}}",
+                                                                            "b": "200",
+                                                                            "o": "text:equal"
+                                                                        }
+                                                                    ]
+                                                                ]
+                                                            },
+                                                            "mapper": {
+                                                                "ca": "",
+                                                                "qs": [
+                                                                    {
+                                                                        "name": "key",
+                                                                        "value": "{{2.`API KEY`}}"
+                                                                    }
+                                                                ],
+                                                                "url": "https://script.googleapis.com/v1/projects/{{2.`Destination Script Id, Old Version`}}/content",
+                                                                "data": "{{3.data}}",
+                                                                "gzip": true,
+                                                                "method": "put",
+                                                                "headers": [],
+                                                                "timeout": "",
+                                                                "useMtls": false,
+                                                                "bodyType": "raw",
+                                                                "contentType": "application/json",
+                                                                "serializeUrl": false,
+                                                                "shareCookies": false,
+                                                                "parseResponse": true,
+                                                                "followRedirect": true,
+                                                                "useQuerystring": false,
+                                                                "followAllRedirects": false,
+                                                                "rejectUnauthorized": true
+                                                            },
+                                                            "metadata": {
+                                                                "designer": {
+                                                                    "x": 1800,
+                                                                    "y": 150,
+                                                                    "name": "Update Contents of the Script"
+                                                                },
+                                                                "restore": {
+                                                                    "expect": {
+                                                                        "qs": {
+                                                                            "mode": "chose",
+                                                                            "items": [
+                                                                                null
+                                                                            ]
+                                                                        },
+                                                                        "method": {
+                                                                            "mode": "chose",
+                                                                            "label": "PUT"
+                                                                        },
+                                                                        "headers": {
+                                                                            "mode": "chose"
+                                                                        },
+                                                                        "bodyType": {
+                                                                            "label": "Raw"
+                                                                        },
+                                                                        "contentType": {
+                                                                            "label": "JSON (application/json)"
+                                                                        }
+                                                                    },
+                                                                    "parameters": {
+                                                                        "account": {
+                                                                            "data": {
+                                                                                "scoped": "true",
+                                                                                "connection": "oauth2"
+                                                                            },
+                                                                            "label": "Amrit's Google Apps Script OAuth 2.0 connection"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "parameters": [
+                                                                    {
+                                                                        "name": "account",
+                                                                        "type": "account:oauth2",
+                                                                        "label": "Connection",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "handleErrors",
+                                                                        "type": "boolean",
+                                                                        "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+                                                                        "required": true
+                                                                    }
+                                                                ],
+                                                                "expect": [
+                                                                    {
+                                                                        "name": "url",
+                                                                        "type": "url",
+                                                                        "label": "URL",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "serializeUrl",
+                                                                        "type": "boolean",
+                                                                        "label": "Serialize URL",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "method",
+                                                                        "type": "select",
+                                                                        "label": "Method",
+                                                                        "required": true,
+                                                                        "validate": {
+                                                                            "enum": [
+                                                                                "get",
+                                                                                "head",
+                                                                                "post",
+                                                                                "put",
+                                                                                "patch",
+                                                                                "delete",
+                                                                                "options"
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "name": "headers",
+                                                                        "spec": [
+                                                                            {
+                                                                                "name": "name",
+                                                                                "type": "text",
+                                                                                "label": "Name",
+                                                                                "required": true
+                                                                            },
+                                                                            {
+                                                                                "name": "value",
+                                                                                "type": "text",
+                                                                                "label": "Value"
+                                                                            }
+                                                                        ],
+                                                                        "type": "array",
+                                                                        "label": "Headers"
+                                                                    },
+                                                                    {
+                                                                        "name": "qs",
+                                                                        "spec": [
+                                                                            {
+                                                                                "name": "name",
+                                                                                "type": "text",
+                                                                                "label": "Name",
+                                                                                "required": true
+                                                                            },
+                                                                            {
+                                                                                "name": "value",
+                                                                                "type": "text",
+                                                                                "label": "Value"
+                                                                            }
+                                                                        ],
+                                                                        "type": "array",
+                                                                        "label": "Query String"
+                                                                    },
+                                                                    {
+                                                                        "name": "bodyType",
+                                                                        "type": "select",
+                                                                        "label": "Body type",
+                                                                        "validate": {
+                                                                            "enum": [
+                                                                                "raw",
+                                                                                "x_www_form_urlencoded",
+                                                                                "multipart_form_data"
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "name": "parseResponse",
+                                                                        "type": "boolean",
+                                                                        "label": "Parse response",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "timeout",
+                                                                        "type": "uinteger",
+                                                                        "label": "Timeout",
+                                                                        "validate": {
+                                                                            "max": 300,
+                                                                            "min": 1
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "name": "shareCookies",
+                                                                        "type": "boolean",
+                                                                        "label": "Share cookies with other HTTP modules",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "ca",
+                                                                        "type": "cert",
+                                                                        "label": "Self-signed certificate"
+                                                                    },
+                                                                    {
+                                                                        "name": "rejectUnauthorized",
+                                                                        "type": "boolean",
+                                                                        "label": "Reject connections that are using unverified (self-signed) certificates",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "followRedirect",
+                                                                        "type": "boolean",
+                                                                        "label": "Follow redirect",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "useQuerystring",
+                                                                        "type": "boolean",
+                                                                        "label": "Disable serialization of multiple same query string keys as arrays",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "gzip",
+                                                                        "type": "boolean",
+                                                                        "label": "Request compressed content",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "useMtls",
+                                                                        "type": "boolean",
+                                                                        "label": "Use Mutual TLS",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "contentType",
+                                                                        "type": "select",
+                                                                        "label": "Content type",
+                                                                        "validate": {
+                                                                            "enum": [
+                                                                                "text/plain",
+                                                                                "application/json",
+                                                                                "application/xml",
+                                                                                "text/xml",
+                                                                                "text/html",
+                                                                                "custom"
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "name": "data",
+                                                                        "type": "buffer",
+                                                                        "label": "Request content"
+                                                                    },
+                                                                    {
+                                                                        "name": "followAllRedirects",
+                                                                        "type": "boolean",
+                                                                        "label": "Follow all redirect",
+                                                                        "required": true
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        {
+                                                            "id": 19,
+                                                            "module": "builtin:BasicRouter",
+                                                            "version": 1,
+                                                            "mapper": null,
+                                                            "metadata": {
+                                                                "designer": {
+                                                                    "x": 2100,
+                                                                    "y": 150
+                                                                }
+                                                            },
+                                                            "routes": [
+                                                                {
+                                                                    "flow": [
+                                                                        {
+                                                                            "id": 8,
+                                                                            "module": "gateway:WebhookRespond",
+                                                                            "version": 1,
+                                                                            "parameters": {},
+                                                                            "filter": {
+                                                                                "name": "Success",
+                                                                                "conditions": [
+                                                                                    [
+                                                                                        {
+                                                                                            "a": "{{4.statusCode}}",
+                                                                                            "b": "200",
+                                                                                            "o": "text:equal"
+                                                                                        }
+                                                                                    ]
+                                                                                ]
+                                                                            },
+                                                                            "mapper": {
+                                                                                "body": "Updated Script.",
+                                                                                "status": "200",
+                                                                                "headers": []
+                                                                            },
+                                                                            "metadata": {
+                                                                                "designer": {
+                                                                                    "x": 2400,
+                                                                                    "y": 0
+                                                                                },
+                                                                                "restore": {
+                                                                                    "expect": {
+                                                                                        "headers": {
+                                                                                            "mode": "chose"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "expect": [
+                                                                                    {
+                                                                                        "name": "status",
+                                                                                        "type": "uinteger",
+                                                                                        "label": "Status",
+                                                                                        "required": true,
+                                                                                        "validate": {
+                                                                                            "min": 100
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "body",
+                                                                                        "type": "any",
+                                                                                        "label": "Body"
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "headers",
+                                                                                        "spec": [
+                                                                                            {
+                                                                                                "name": "key",
+                                                                                                "type": "text",
+                                                                                                "label": "Key",
+                                                                                                "required": true,
+                                                                                                "validate": {
+                                                                                                    "max": 256
+                                                                                                }
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "value",
+                                                                                                "type": "text",
+                                                                                                "label": "Value",
+                                                                                                "required": true,
+                                                                                                "validate": {
+                                                                                                    "max": 4096
+                                                                                                }
+                                                                                            }
+                                                                                        ],
+                                                                                        "type": "array",
+                                                                                        "label": "Custom headers",
+                                                                                        "validate": {
+                                                                                            "maxItems": 16
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "id": 27,
+                                                                            "module": "util:SetVariable2",
+                                                                            "version": 1,
+                                                                            "parameters": {},
+                                                                            "mapper": {
+                                                                                "name": "Response Sent",
+                                                                                "scope": "roundtrip",
+                                                                                "value": "{{true}}"
+                                                                            },
+                                                                            "metadata": {
+                                                                                "designer": {
+                                                                                    "x": 2700,
+                                                                                    "y": 0
+                                                                                },
+                                                                                "restore": {
+                                                                                    "expect": {
+                                                                                        "scope": {
+                                                                                            "label": "One cycle"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "expect": [
+                                                                                    {
+                                                                                        "name": "name",
+                                                                                        "type": "text",
+                                                                                        "label": "Variable name",
+                                                                                        "required": true
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "scope",
+                                                                                        "type": "select",
+                                                                                        "label": "Variable lifetime",
+                                                                                        "required": true,
+                                                                                        "validate": {
+                                                                                            "enum": [
+                                                                                                "roundtrip",
+                                                                                                "execution"
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "value",
+                                                                                        "type": "any",
+                                                                                        "label": "Variable value"
+                                                                                    }
+                                                                                ],
+                                                                                "interface": [
+                                                                                    {
+                                                                                        "name": "Response Sent",
+                                                                                        "type": "any",
+                                                                                        "label": "Response Sent"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                },
+                                                                {
+                                                                    "flow": [
+                                                                        {
+                                                                            "id": 21,
+                                                                            "module": "http:ActionSendData",
+                                                                            "version": 3,
+                                                                            "parameters": {
+                                                                                "handleErrors": false,
+                                                                                "useNewZLibDeCompress": "true"
+                                                                            },
+                                                                            "filter": {
+                                                                                "name": "Error",
+                                                                                "conditions": [
+                                                                                    [
+                                                                                        {
+                                                                                            "a": "{{4.statusCode}}",
+                                                                                            "b": "200",
+                                                                                            "o": "text:notequal:ci"
+                                                                                        }
+                                                                                    ]
+                                                                                ]
+                                                                            },
+                                                                            "mapper": {
+                                                                                "ca": "",
+                                                                                "qs": [
+                                                                                    {
+                                                                                        "name": "error",
+                                                                                        "value": "Get Contents of the Script\n\n{{3.statusCode}}\n{{3.data}}\n{{3.error}}"
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "script",
+                                                                                        "value": "{{var.scenario.name}}"
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "script_url",
+                                                                                        "value": "{{var.scenario.url}}"
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "executionId",
+                                                                                        "value": "{{var.scenario.executionId}}"
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "action_url",
+                                                                                        "value": ""
+                                                                                    }
+                                                                                ],
+                                                                                "url": "https://hook.eu1.make.com/k79frh2qdwix26jcj48edrt6654lixuv",
+                                                                                "gzip": true,
+                                                                                "method": "post",
+                                                                                "headers": [],
+                                                                                "timeout": "",
+                                                                                "useMtls": false,
+                                                                                "authPass": "",
+                                                                                "authUser": "",
+                                                                                "bodyType": "",
+                                                                                "serializeUrl": false,
+                                                                                "shareCookies": false,
+                                                                                "parseResponse": true,
+                                                                                "followRedirect": true,
+                                                                                "useQuerystring": false,
+                                                                                "followAllRedirects": false,
+                                                                                "rejectUnauthorized": true
+                                                                            },
+                                                                            "metadata": {
+                                                                                "designer": {
+                                                                                    "x": 2400,
+                                                                                    "y": 300,
+                                                                                    "name": "UTIL8686IG #ops-automation-errors"
+                                                                                },
+                                                                                "restore": {
+                                                                                    "expect": {
+                                                                                        "qs": {
+                                                                                            "mode": "chose",
+                                                                                            "items": [
+                                                                                                null,
+                                                                                                null,
+                                                                                                null,
+                                                                                                null,
+                                                                                                null
+                                                                                            ]
+                                                                                        },
+                                                                                        "method": {
+                                                                                            "mode": "chose",
+                                                                                            "label": "POST"
+                                                                                        },
+                                                                                        "headers": {
+                                                                                            "mode": "chose"
+                                                                                        },
+                                                                                        "bodyType": {
+                                                                                            "label": "Empty"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "parameters": [
+                                                                                    {
+                                                                                        "name": "handleErrors",
+                                                                                        "type": "boolean",
+                                                                                        "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+                                                                                        "required": true
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "useNewZLibDeCompress",
+                                                                                        "type": "hidden"
+                                                                                    }
+                                                                                ],
+                                                                                "expect": [
+                                                                                    {
+                                                                                        "name": "url",
+                                                                                        "type": "url",
+                                                                                        "label": "URL",
+                                                                                        "required": true
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "serializeUrl",
+                                                                                        "type": "boolean",
+                                                                                        "label": "Serialize URL",
+                                                                                        "required": true
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "method",
+                                                                                        "type": "select",
+                                                                                        "label": "Method",
+                                                                                        "required": true,
+                                                                                        "validate": {
+                                                                                            "enum": [
+                                                                                                "get",
+                                                                                                "head",
+                                                                                                "post",
+                                                                                                "put",
+                                                                                                "patch",
+                                                                                                "delete",
+                                                                                                "options"
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "headers",
+                                                                                        "spec": [
+                                                                                            {
+                                                                                                "name": "name",
+                                                                                                "type": "text",
+                                                                                                "label": "Name",
+                                                                                                "required": true
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "value",
+                                                                                                "type": "text",
+                                                                                                "label": "Value"
+                                                                                            }
+                                                                                        ],
+                                                                                        "type": "array",
+                                                                                        "label": "Headers"
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "qs",
+                                                                                        "spec": [
+                                                                                            {
+                                                                                                "name": "name",
+                                                                                                "type": "text",
+                                                                                                "label": "Name",
+                                                                                                "required": true
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "value",
+                                                                                                "type": "text",
+                                                                                                "label": "Value"
+                                                                                            }
+                                                                                        ],
+                                                                                        "type": "array",
+                                                                                        "label": "Query String"
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "bodyType",
+                                                                                        "type": "select",
+                                                                                        "label": "Body type",
+                                                                                        "validate": {
+                                                                                            "enum": [
+                                                                                                "raw",
+                                                                                                "x_www_form_urlencoded",
+                                                                                                "multipart_form_data"
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "parseResponse",
+                                                                                        "type": "boolean",
+                                                                                        "label": "Parse response",
+                                                                                        "required": true
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "authUser",
+                                                                                        "type": "text",
+                                                                                        "label": "User name"
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "authPass",
+                                                                                        "type": "password",
+                                                                                        "label": "Password"
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "timeout",
+                                                                                        "type": "uinteger",
+                                                                                        "label": "Timeout",
+                                                                                        "validate": {
+                                                                                            "max": 300,
+                                                                                            "min": 1
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "shareCookies",
+                                                                                        "type": "boolean",
+                                                                                        "label": "Share cookies with other HTTP modules",
+                                                                                        "required": true
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "ca",
+                                                                                        "type": "cert",
+                                                                                        "label": "Self-signed certificate"
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "rejectUnauthorized",
+                                                                                        "type": "boolean",
+                                                                                        "label": "Reject connections that are using unverified (self-signed) certificates",
+                                                                                        "required": true
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "followRedirect",
+                                                                                        "type": "boolean",
+                                                                                        "label": "Follow redirect",
+                                                                                        "required": true
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "useQuerystring",
+                                                                                        "type": "boolean",
+                                                                                        "label": "Disable serialization of multiple same query string keys as arrays",
+                                                                                        "required": true
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "gzip",
+                                                                                        "type": "boolean",
+                                                                                        "label": "Request compressed content",
+                                                                                        "required": true
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "useMtls",
+                                                                                        "type": "boolean",
+                                                                                        "label": "Use Mutual TLS",
+                                                                                        "required": true
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "followAllRedirects",
+                                                                                        "type": "boolean",
+                                                                                        "label": "Follow all redirect",
+                                                                                        "required": true
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "id": 22,
+                                                                            "module": "gateway:WebhookRespond",
+                                                                            "version": 1,
+                                                                            "parameters": {},
+                                                                            "mapper": {
+                                                                                "body": "Script Update Failed",
+                                                                                "status": "400",
+                                                                                "headers": []
+                                                                            },
+                                                                            "metadata": {
+                                                                                "designer": {
+                                                                                    "x": 2700,
+                                                                                    "y": 300
+                                                                                },
+                                                                                "restore": {
+                                                                                    "expect": {
+                                                                                        "headers": {
+                                                                                            "mode": "chose"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "expect": [
+                                                                                    {
+                                                                                        "name": "status",
+                                                                                        "type": "uinteger",
+                                                                                        "label": "Status",
+                                                                                        "required": true,
+                                                                                        "validate": {
+                                                                                            "min": 100
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "body",
+                                                                                        "type": "any",
+                                                                                        "label": "Body"
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "headers",
+                                                                                        "spec": [
+                                                                                            {
+                                                                                                "name": "key",
+                                                                                                "type": "text",
+                                                                                                "label": "Key",
+                                                                                                "required": true,
+                                                                                                "validate": {
+                                                                                                    "max": 256
+                                                                                                }
+                                                                                            },
+                                                                                            {
+                                                                                                "name": "value",
+                                                                                                "type": "text",
+                                                                                                "label": "Value",
+                                                                                                "required": true,
+                                                                                                "validate": {
+                                                                                                    "max": 4096
+                                                                                                }
+                                                                                            }
+                                                                                        ],
+                                                                                        "type": "array",
+                                                                                        "label": "Custom headers",
+                                                                                        "validate": {
+                                                                                            "maxItems": 16
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "id": 28,
+                                                                            "module": "util:SetVariable2",
+                                                                            "version": 1,
+                                                                            "parameters": {},
+                                                                            "mapper": {
+                                                                                "name": "Response Sent",
+                                                                                "scope": "roundtrip",
+                                                                                "value": "{{true}}"
+                                                                            },
+                                                                            "metadata": {
+                                                                                "designer": {
+                                                                                    "x": 3000,
+                                                                                    "y": 300
+                                                                                },
+                                                                                "restore": {
+                                                                                    "expect": {
+                                                                                        "scope": {
+                                                                                            "label": "One cycle"
+                                                                                        }
+                                                                                    }
+                                                                                },
+                                                                                "expect": [
+                                                                                    {
+                                                                                        "name": "name",
+                                                                                        "type": "text",
+                                                                                        "label": "Variable name",
+                                                                                        "required": true
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "scope",
+                                                                                        "type": "select",
+                                                                                        "label": "Variable lifetime",
+                                                                                        "required": true,
+                                                                                        "validate": {
+                                                                                            "enum": [
+                                                                                                "roundtrip",
+                                                                                                "execution"
+                                                                                            ]
+                                                                                        }
+                                                                                    },
+                                                                                    {
+                                                                                        "name": "value",
+                                                                                        "type": "any",
+                                                                                        "label": "Variable value"
+                                                                                    }
+                                                                                ],
+                                                                                "interface": [
+                                                                                    {
+                                                                                        "name": "Response Sent",
+                                                                                        "type": "any",
+                                                                                        "label": "Response Sent"
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    "flow": [
+                                                        {
+                                                            "id": 11,
+                                                            "module": "http:ActionSendData",
+                                                            "version": 3,
+                                                            "parameters": {
+                                                                "handleErrors": false,
+                                                                "useNewZLibDeCompress": "true"
+                                                            },
+                                                            "filter": {
+                                                                "name": "Error",
+                                                                "conditions": [
+                                                                    [
+                                                                        {
+                                                                            "a": "{{3.statusCode}}",
+                                                                            "b": "200",
+                                                                            "o": "text:notequal:ci"
+                                                                        }
+                                                                    ]
+                                                                ]
+                                                            },
+                                                            "mapper": {
+                                                                "ca": "",
+                                                                "qs": [
+                                                                    {
+                                                                        "name": "error",
+                                                                        "value": "Get Contents of the Script\n\n{{3.statusCode}}\n{{3.data}}\n{{3.error}}"
+                                                                    },
+                                                                    {
+                                                                        "name": "script",
+                                                                        "value": "{{var.scenario.name}}"
+                                                                    },
+                                                                    {
+                                                                        "name": "script_url",
+                                                                        "value": "{{var.scenario.url}}"
+                                                                    },
+                                                                    {
+                                                                        "name": "executionId",
+                                                                        "value": "{{var.scenario.executionId}}"
+                                                                    },
+                                                                    {
+                                                                        "name": "action_url",
+                                                                        "value": ""
+                                                                    }
+                                                                ],
+                                                                "url": "https://hook.eu1.make.com/k79frh2qdwix26jcj48edrt6654lixuv",
+                                                                "gzip": true,
+                                                                "method": "post",
+                                                                "headers": [],
+                                                                "timeout": "",
+                                                                "useMtls": false,
+                                                                "authPass": "",
+                                                                "authUser": "",
+                                                                "bodyType": "",
+                                                                "serializeUrl": false,
+                                                                "shareCookies": false,
+                                                                "parseResponse": true,
+                                                                "followRedirect": true,
+                                                                "useQuerystring": false,
+                                                                "followAllRedirects": false,
+                                                                "rejectUnauthorized": true
+                                                            },
+                                                            "metadata": {
+                                                                "designer": {
+                                                                    "x": 1800,
+                                                                    "y": 600,
+                                                                    "name": "UTIL8686IG #ops-automation-errors"
+                                                                },
+                                                                "restore": {
+                                                                    "expect": {
+                                                                        "qs": {
+                                                                            "mode": "chose",
+                                                                            "items": [
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null,
+                                                                                null
+                                                                            ]
+                                                                        },
+                                                                        "method": {
+                                                                            "mode": "chose",
+                                                                            "label": "POST"
+                                                                        },
+                                                                        "headers": {
+                                                                            "mode": "chose"
+                                                                        },
+                                                                        "bodyType": {
+                                                                            "label": "Empty"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "parameters": [
+                                                                    {
+                                                                        "name": "handleErrors",
+                                                                        "type": "boolean",
+                                                                        "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "useNewZLibDeCompress",
+                                                                        "type": "hidden"
+                                                                    }
+                                                                ],
+                                                                "expect": [
+                                                                    {
+                                                                        "name": "url",
+                                                                        "type": "url",
+                                                                        "label": "URL",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "serializeUrl",
+                                                                        "type": "boolean",
+                                                                        "label": "Serialize URL",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "method",
+                                                                        "type": "select",
+                                                                        "label": "Method",
+                                                                        "required": true,
+                                                                        "validate": {
+                                                                            "enum": [
+                                                                                "get",
+                                                                                "head",
+                                                                                "post",
+                                                                                "put",
+                                                                                "patch",
+                                                                                "delete",
+                                                                                "options"
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "name": "headers",
+                                                                        "spec": [
+                                                                            {
+                                                                                "name": "name",
+                                                                                "type": "text",
+                                                                                "label": "Name",
+                                                                                "required": true
+                                                                            },
+                                                                            {
+                                                                                "name": "value",
+                                                                                "type": "text",
+                                                                                "label": "Value"
+                                                                            }
+                                                                        ],
+                                                                        "type": "array",
+                                                                        "label": "Headers"
+                                                                    },
+                                                                    {
+                                                                        "name": "qs",
+                                                                        "spec": [
+                                                                            {
+                                                                                "name": "name",
+                                                                                "type": "text",
+                                                                                "label": "Name",
+                                                                                "required": true
+                                                                            },
+                                                                            {
+                                                                                "name": "value",
+                                                                                "type": "text",
+                                                                                "label": "Value"
+                                                                            }
+                                                                        ],
+                                                                        "type": "array",
+                                                                        "label": "Query String"
+                                                                    },
+                                                                    {
+                                                                        "name": "bodyType",
+                                                                        "type": "select",
+                                                                        "label": "Body type",
+                                                                        "validate": {
+                                                                            "enum": [
+                                                                                "raw",
+                                                                                "x_www_form_urlencoded",
+                                                                                "multipart_form_data"
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "name": "parseResponse",
+                                                                        "type": "boolean",
+                                                                        "label": "Parse response",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "authUser",
+                                                                        "type": "text",
+                                                                        "label": "User name"
+                                                                    },
+                                                                    {
+                                                                        "name": "authPass",
+                                                                        "type": "password",
+                                                                        "label": "Password"
+                                                                    },
+                                                                    {
+                                                                        "name": "timeout",
+                                                                        "type": "uinteger",
+                                                                        "label": "Timeout",
+                                                                        "validate": {
+                                                                            "max": 300,
+                                                                            "min": 1
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "name": "shareCookies",
+                                                                        "type": "boolean",
+                                                                        "label": "Share cookies with other HTTP modules",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "ca",
+                                                                        "type": "cert",
+                                                                        "label": "Self-signed certificate"
+                                                                    },
+                                                                    {
+                                                                        "name": "rejectUnauthorized",
+                                                                        "type": "boolean",
+                                                                        "label": "Reject connections that are using unverified (self-signed) certificates",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "followRedirect",
+                                                                        "type": "boolean",
+                                                                        "label": "Follow redirect",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "useQuerystring",
+                                                                        "type": "boolean",
+                                                                        "label": "Disable serialization of multiple same query string keys as arrays",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "gzip",
+                                                                        "type": "boolean",
+                                                                        "label": "Request compressed content",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "useMtls",
+                                                                        "type": "boolean",
+                                                                        "label": "Use Mutual TLS",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "followAllRedirects",
+                                                                        "type": "boolean",
+                                                                        "label": "Follow all redirect",
+                                                                        "required": true
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        {
+                                                            "id": 18,
+                                                            "module": "gateway:WebhookRespond",
+                                                            "version": 1,
+                                                            "parameters": {},
+                                                            "mapper": {
+                                                                "body": "Script Update Failed",
+                                                                "status": "400",
+                                                                "headers": []
+                                                            },
+                                                            "metadata": {
+                                                                "designer": {
+                                                                    "x": 2100,
+                                                                    "y": 600
+                                                                },
+                                                                "restore": {
+                                                                    "expect": {
+                                                                        "headers": {
+                                                                            "mode": "chose"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "expect": [
+                                                                    {
+                                                                        "name": "status",
+                                                                        "type": "uinteger",
+                                                                        "label": "Status",
+                                                                        "required": true,
+                                                                        "validate": {
+                                                                            "min": 100
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "name": "body",
+                                                                        "type": "any",
+                                                                        "label": "Body"
+                                                                    },
+                                                                    {
+                                                                        "name": "headers",
+                                                                        "spec": [
+                                                                            {
+                                                                                "name": "key",
+                                                                                "type": "text",
+                                                                                "label": "Key",
+                                                                                "required": true,
+                                                                                "validate": {
+                                                                                    "max": 256
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "name": "value",
+                                                                                "type": "text",
+                                                                                "label": "Value",
+                                                                                "required": true,
+                                                                                "validate": {
+                                                                                    "max": 4096
+                                                                                }
+                                                                            }
+                                                                        ],
+                                                                        "type": "array",
+                                                                        "label": "Custom headers",
+                                                                        "validate": {
+                                                                            "maxItems": 16
+                                                                        }
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        {
+                                                            "id": 29,
+                                                            "module": "util:SetVariable2",
+                                                            "version": 1,
+                                                            "parameters": {},
+                                                            "mapper": {
+                                                                "name": "Response Sent",
+                                                                "scope": "roundtrip",
+                                                                "value": "{{true}}"
+                                                            },
+                                                            "metadata": {
+                                                                "designer": {
+                                                                    "x": 2400,
+                                                                    "y": 600
+                                                                },
+                                                                "restore": {
+                                                                    "expect": {
+                                                                        "scope": {
+                                                                            "label": "One cycle"
+                                                                        }
+                                                                    }
+                                                                },
+                                                                "expect": [
+                                                                    {
+                                                                        "name": "name",
+                                                                        "type": "text",
+                                                                        "label": "Variable name",
+                                                                        "required": true
+                                                                    },
+                                                                    {
+                                                                        "name": "scope",
+                                                                        "type": "select",
+                                                                        "label": "Variable lifetime",
+                                                                        "required": true,
+                                                                        "validate": {
+                                                                            "enum": [
+                                                                                "roundtrip",
+                                                                                "execution"
+                                                                            ]
+                                                                        }
+                                                                    },
+                                                                    {
+                                                                        "name": "value",
+                                                                        "type": "any",
+                                                                        "label": "Variable value"
+                                                                    }
+                                                                ],
+                                                                "interface": [
+                                                                    {
+                                                                        "name": "Response Sent",
+                                                                        "type": "any",
+                                                                        "label": "Response Sent"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                },
+                                {
+                                    "flow": [
+                                        {
+                                            "id": 26,
+                                            "module": "gateway:WebhookRespond",
+                                            "version": 1,
+                                            "parameters": {},
+                                            "filter": {
+                                                "name": "Template Update",
+                                                "conditions": [
+                                                    [
+                                                        {
+                                                            "a": "{{2.`Is Template Update`}}",
+                                                            "b": "{{true}}",
+                                                            "o": "boolean:equal"
+                                                        }
+                                                    ]
+                                                ]
+                                            },
+                                            "mapper": {
+                                                "body": "This is a template update.",
+                                                "status": "400",
+                                                "headers": []
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1200,
+                                                    "y": 900
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "headers": {
+                                                            "mode": "chose"
+                                                        }
+                                                    }
+                                                },
+                                                "expect": [
+                                                    {
+                                                        "name": "status",
+                                                        "type": "uinteger",
+                                                        "label": "Status",
+                                                        "required": true,
+                                                        "validate": {
+                                                            "min": 100
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "body",
+                                                        "type": "any",
+                                                        "label": "Body"
+                                                    },
+                                                    {
+                                                        "name": "headers",
+                                                        "spec": [
+                                                            {
+                                                                "name": "key",
+                                                                "type": "text",
+                                                                "label": "Key",
+                                                                "required": true,
+                                                                "validate": {
+                                                                    "max": 256
+                                                                }
+                                                            },
+                                                            {
+                                                                "name": "value",
+                                                                "type": "text",
+                                                                "label": "Value",
+                                                                "required": true,
+                                                                "validate": {
+                                                                    "max": 4096
+                                                                }
+                                                            }
+                                                        ],
+                                                        "type": "array",
+                                                        "label": "Custom headers",
+                                                        "validate": {
+                                                            "maxItems": 16
+                                                        }
+                                                    }
+                                                ]
+                                            }
+                                        },
+                                        {
+                                            "id": 30,
+                                            "module": "util:SetVariable2",
+                                            "version": 1,
+                                            "parameters": {},
+                                            "mapper": {
+                                                "name": "Response Sent",
+                                                "scope": "roundtrip",
+                                                "value": "{{true}}"
+                                            },
+                                            "metadata": {
+                                                "designer": {
+                                                    "x": 1500,
+                                                    "y": 900
+                                                },
+                                                "restore": {
+                                                    "expect": {
+                                                        "scope": {
+                                                            "label": "One cycle"
+                                                        }
+                                                    }
+                                                },
+                                                "expect": [
+                                                    {
+                                                        "name": "name",
+                                                        "type": "text",
+                                                        "label": "Variable name",
+                                                        "required": true
+                                                    },
+                                                    {
+                                                        "name": "scope",
+                                                        "type": "select",
+                                                        "label": "Variable lifetime",
+                                                        "required": true,
+                                                        "validate": {
+                                                            "enum": [
+                                                                "roundtrip",
+                                                                "execution"
+                                                            ]
+                                                        }
+                                                    },
+                                                    {
+                                                        "name": "value",
+                                                        "type": "any",
+                                                        "label": "Variable value"
+                                                    }
+                                                ],
+                                                "interface": [
+                                                    {
+                                                        "name": "Response Sent",
+                                                        "type": "any",
+                                                        "label": "Response Sent"
+                                                    }
+                                                ]
+                                            }
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "flow": [
+                        {
+                            "id": 31,
+                            "module": "util:GetVariable2",
+                            "version": 1,
+                            "parameters": {},
+                            "mapper": {
+                                "name": "Response Sent"
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 600,
+                                    "y": 1200
+                                },
+                                "restore": {},
+                                "expect": [
+                                    {
+                                        "name": "name",
+                                        "type": "text",
+                                        "label": "Variable name",
+                                        "required": true
+                                    }
+                                ],
+                                "interface": [
+                                    {
+                                        "name": "Response Sent",
+                                        "type": "any",
+                                        "label": "Response Sent"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "id": 32,
+                            "module": "gateway:WebhookRespond",
+                            "version": 1,
+                            "parameters": {},
+                            "filter": {
+                                "name": "Response Not Sent",
+                                "conditions": [
+                                    [
+                                        {
+                                            "a": "{{31.`Response Sent`}}",
+                                            "b": "{{true}}",
+                                            "o": "boolean:notequal"
+                                        }
+                                    ]
+                                ]
+                            },
+                            "mapper": {
+                                "body": "Not Success",
+                                "status": "401",
+                                "headers": []
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 900,
+                                    "y": 1200
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "headers": {
+                                            "mode": "chose"
+                                        }
+                                    }
+                                },
+                                "expect": [
+                                    {
+                                        "name": "status",
+                                        "type": "uinteger",
+                                        "label": "Status",
+                                        "required": true,
+                                        "validate": {
+                                            "min": 100
+                                        }
+                                    },
+                                    {
+                                        "name": "body",
+                                        "type": "any",
+                                        "label": "Body"
+                                    },
+                                    {
+                                        "name": "headers",
+                                        "spec": [
+                                            {
+                                                "name": "key",
+                                                "type": "text",
+                                                "label": "Key",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 256
+                                                }
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Value",
+                                                "required": true,
+                                                "validate": {
+                                                    "max": 4096
+                                                }
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Custom headers",
+                                        "validate": {
+                                            "maxItems": 16
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "disabled": true,
+                    "flow": [
+                        {
+                            "id": 6,
+                            "module": "http:ActionSendData",
+                            "version": 3,
+                            "parameters": {
+                                "handleErrors": false,
+                                "useNewZLibDeCompress": true
+                            },
+                            "mapper": {
+                                "ca": "",
+                                "qs": [
+                                    {
+                                        "name": "sourceUpdatedScriptId",
+                                        "value": "1UYxaicpe0ICA2XUND2JwLTMxYd9GhHBU8OoKDaT-WIESYohzcM0-7Vng"
+                                    },
+                                    {
+                                        "name": "toUpdateScriptId",
+                                        "value": ""
+                                    },
+                                    {
+                                        "name": "isTemplateUpdate",
+                                        "value": ""
+                                    }
+                                ],
+                                "url": "https://hook.eu1.make.com/ipgii1iz17aa0ayjbmfgmreyea5i3zu6",
+                                "gzip": true,
+                                "method": "get",
+                                "headers": [],
+                                "timeout": "",
+                                "useMtls": false,
+                                "authPass": "",
+                                "authUser": "",
+                                "bodyType": "",
+                                "serializeUrl": false,
+                                "shareCookies": false,
+                                "parseResponse": false,
+                                "followRedirect": true,
+                                "useQuerystring": false,
+                                "followAllRedirects": false,
+                                "rejectUnauthorized": true
+                            },
+                            "metadata": {
+                                "designer": {
+                                    "x": 600,
+                                    "y": 1500,
+                                    "name": "Update Apps Script Code | Amrit's DSM Bot"
+                                },
+                                "restore": {
+                                    "expect": {
+                                        "qs": {
+                                            "mode": "chose",
+                                            "items": [
+                                                null,
+                                                null,
+                                                null
+                                            ]
+                                        },
+                                        "method": {
+                                            "mode": "chose",
+                                            "label": "GET"
+                                        },
+                                        "headers": {
+                                            "mode": "chose"
+                                        },
+                                        "bodyType": {
+                                            "label": "Empty"
+                                        }
+                                    }
+                                },
+                                "parameters": [
+                                    {
+                                        "name": "handleErrors",
+                                        "type": "boolean",
+                                        "label": "Evaluate all states as errors (except for 2xx and 3xx )",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "useNewZLibDeCompress",
+                                        "type": "hidden"
+                                    }
+                                ],
+                                "expect": [
+                                    {
+                                        "name": "url",
+                                        "type": "url",
+                                        "label": "URL",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "serializeUrl",
+                                        "type": "boolean",
+                                        "label": "Serialize URL",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "method",
+                                        "type": "select",
+                                        "label": "Method",
+                                        "required": true,
+                                        "validate": {
+                                            "enum": [
+                                                "get",
+                                                "head",
+                                                "post",
+                                                "put",
+                                                "patch",
+                                                "delete",
+                                                "options"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "headers",
+                                        "spec": [
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Name",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Headers"
+                                    },
+                                    {
+                                        "name": "qs",
+                                        "spec": [
+                                            {
+                                                "name": "name",
+                                                "type": "text",
+                                                "label": "Name",
+                                                "required": true
+                                            },
+                                            {
+                                                "name": "value",
+                                                "type": "text",
+                                                "label": "Value"
+                                            }
+                                        ],
+                                        "type": "array",
+                                        "label": "Query String"
+                                    },
+                                    {
+                                        "name": "bodyType",
+                                        "type": "select",
+                                        "label": "Body type",
+                                        "validate": {
+                                            "enum": [
+                                                "raw",
+                                                "x_www_form_urlencoded",
+                                                "multipart_form_data"
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "name": "parseResponse",
+                                        "type": "boolean",
+                                        "label": "Parse response",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "authUser",
+                                        "type": "text",
+                                        "label": "User name"
+                                    },
+                                    {
+                                        "name": "authPass",
+                                        "type": "password",
+                                        "label": "Password"
+                                    },
+                                    {
+                                        "name": "timeout",
+                                        "type": "uinteger",
+                                        "label": "Timeout",
+                                        "validate": {
+                                            "max": 300,
+                                            "min": 1
+                                        }
+                                    },
+                                    {
+                                        "name": "shareCookies",
+                                        "type": "boolean",
+                                        "label": "Share cookies with other HTTP modules",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "ca",
+                                        "type": "cert",
+                                        "label": "Self-signed certificate"
+                                    },
+                                    {
+                                        "name": "rejectUnauthorized",
+                                        "type": "boolean",
+                                        "label": "Reject connections that are using unverified (self-signed) certificates",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "followRedirect",
+                                        "type": "boolean",
+                                        "label": "Follow redirect",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "useQuerystring",
+                                        "type": "boolean",
+                                        "label": "Disable serialization of multiple same query string keys as arrays",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "gzip",
+                                        "type": "boolean",
+                                        "label": "Request compressed content",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "useMtls",
+                                        "type": "boolean",
+                                        "label": "Use Mutual TLS",
+                                        "required": true
+                                    },
+                                    {
+                                        "name": "followAllRedirects",
+                                        "type": "boolean",
+                                        "label": "Follow all redirect",
+                                        "required": true
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ],
+    "metadata": {
+        "instant": true,
+        "version": 1,
+        "scenario": {
+            "roundtrips": 1,
+            "maxErrors": 3,
+            "autoCommit": true,
+            "autoCommitTriggerLast": true,
+            "sequential": false,
+            "slots": null,
+            "confidential": false,
+            "dataloss": false,
+            "dlq": false,
+            "freshVariables": false
+        },
+        "designer": {
+            "orphans": []
+        },
+        "zone": "eu1.make.celonis.com"
+    }
+}
