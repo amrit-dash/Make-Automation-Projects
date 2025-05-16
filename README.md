@@ -40,7 +40,6 @@ Automates daily status meeting (DSM) reports for teams, integrating with Timetas
 ## 2. Cricket Bot — Prediction & Engagement Automation
 
 ![Cricket Bot Sheet 1](https://i.ibb.co/q3c3LVDM/cricket-sheet-1.jpg)
-![Cricket Bot Sheet 2](https://i.ibb.co/3bsht45/cricket-sheet-2.jpg)
 
 ### **Summary**
 A fun, engagement-focused bot for company cricket events which was enabled by a bot that collects predictions from team members. The bot built by me fetches live scores, updates leaderboards for the match league, and based on historic data of the teams playing, predict and respond on my behalf. The bot integrates with Slack, Google Sheets, and external cricket APIs.
