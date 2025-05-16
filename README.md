@@ -1,6 +1,6 @@
 # Make Automation Projects
 
-![Make.com](https://img.shields.io/badge/Make.com-Automation-blue?logo=make) ![Google Apps Script](https://img.shields.io/badge/Google%20Apps%20Script-Backend-yellow?logo=google) ![Slack](https://img.shields.io/badge/Slack-Integration-4A154B?logo=slack) ![Zoho](https://img.shields.io/badge/Zoho-Integration-FF4A00?logo=zoho) ![RapidAPI](https://img.shields.io/badge/RapidAPI-Integration-0096D6?logo=rapidapi) ![MIT License](https://img.shields.io/badge/License-MIT-green?logo=open-source)
+![Make.com](https://img.shields.io/badge/Make.com-Automation-blue?logo=make) ![Google Apps Script](https://img.shields.io/badge/Google%20Apps%20Script-Backend-yellow?logo=google) ![Slack](https://img.shields.io/badge/Slack-Integration-4A154B?logo=slack) ![Zoho](https://img.shields.io/badge/Zoho-Integration-FF4A00?logo=zoho) ![RapidAPI](https://img.shields.io/badge/RapidAPI-Integration-0096D6?logo=rapidapi)
 
 ---
 
